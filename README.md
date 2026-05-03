@@ -35,7 +35,10 @@ Když pak s princeznou Elenkou promluví, vyhrává.
 - **princezna Elenka** - v komnatě, cíl hry
 
 ## Příkazy
-Standardní (z výchozího projektu): `jdi`, `konec`, `nápověda`
+
+- `jdi` - posune hráče do dalšího prostoru
+- `konec` - ukončí hru
+- `nápověda` - otevře nápovědu
 
 - `seber <věc>` - vyjme přenositelnou věc z aktuálního prostoru a vloží ji do batohu (kapacita 3).
 - `polož <věc>` - vyjme věc z batohu a vloží ji do aktuálního prostoru.
