@@ -16,6 +16,7 @@ public class Hra implements IHra {
     private SeznamPrikazu platnePrikazy;    // obsahuje seznam přípustných příkazů
     private HerniPlan herniPlan;
     private boolean konecHry = false;
+    private boolean vyhra = false;
 
     /**
      *  Vytváří hru a inicializuje místnosti (prostřednictvím třídy HerniPlan) a seznam platných příkazů.
@@ -29,6 +30,9 @@ public class Hra implements IHra {
         platnePrikazy.vlozPrikaz(new PrikazSeber(herniPlan));
         platnePrikazy.vlozPrikaz(new PrikazPoloz(herniPlan));
         platnePrikazy.vlozPrikaz(new PrikazVypis(herniPlan));
+        platnePrikazy.vlozPrikaz(new PrikazProzkoumej(herniPlan));
+        platnePrikazy.vlozPrikaz(new PrikazPouzij(herniPlan));
+        platnePrikazy.vlozPrikaz(new PrikazMluv(herniPlan, this));
     }
 
     /**
@@ -44,9 +48,14 @@ public class Hra implements IHra {
     }
     
     /**
-     *  Vrátí závěrečnou zprávu pro hráče.
+     *  Vrátí závěrečnou zprávu pro hráče. Pokud hra skončila výhrou,
+     *  vypíše se vítězné poselství.
      */
     public String vratEpilog() {
+        if (vyhra) {
+            return "Princezna Elenka je v bezpečí. Hrdina Honza zachránil království.\n"
+                 + "Dík, že jste si zahráli. Ahoj.";
+        }
         return "Dík, že jste si zahráli.  Ahoj.";
     }
     
@@ -92,6 +101,15 @@ public class Hra implements IHra {
      */
     void setKonecHry(boolean konecHry) {
         this.konecHry = konecHry;
+    }
+
+    /**
+     *  Označí hru jako vyhranou a zároveň ji ukončí.
+     *  Volá se z příkazu mluv při úspěšné záchraně princezny Elenky.
+     */
+    void nastavVyhru() {
+        this.vyhra = true;
+        this.konecHry = true;
     }
     
      /**

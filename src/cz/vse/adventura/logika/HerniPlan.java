@@ -49,10 +49,25 @@ public class HerniPlan {
         komnata.setVychod(hrad);
 
         // rozmístění věcí
-        svetnice.vlozVec(new Vec("jablko", true));
-        les.vlozVec(new Vec("meč",        true));
-        jeskyne.vlozVec(new Vec("klíč",   true));
-        hrad.vlozVec(new Vec("truhla",    false));
+        svetnice.vlozVec(new Vec("jablko", true,
+                "Červené šťavnaté jablko, které si můžeš vzít na cestu."));
+        les.vlozVec(new Vec("meč", true,
+                "Starý rytířský meč, ostrý a překvapivě dobře padne do ruky."));
+        jeskyne.vlozVec(new Vec("klíč", true,
+                "Rezavý železný klíč, pravděpodobně od moc důležitých dveří"));
+        hrad.vlozVec(new Vec("truhla", false,
+                "Robustní dřevěná truhla, na zámku visí těžký řetěz. Nejde otevřít."));
+
+        // postavy
+        jeskyne.vlozPostavu(new Postava("drak",
+                "Obrovský šupinatý drak, bylo by lepší ho neprobudit.",
+                "Drak ve spánku zafuněl. Raději jdi pryč."));
+        komnata.vlozPostavu(new Postava("Elenka",
+                "Zakletá princezna Elenka už dlohé roky čeká na svého zachránce.",
+                "Princezna Elenka se rozzáří: \"Honzo, tys mě zachránil!\""));
+
+        // komnata je na začátku zamčená
+        komnata.setZamcen(true);
 
         aktualniProstor = svetnice;  // hra začíná ve světnici
     }

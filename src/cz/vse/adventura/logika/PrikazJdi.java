@@ -44,10 +44,16 @@ class PrikazJdi implements IPrikaz {
         if (sousedniProstor == null) {
             return "Tam se odsud jít nedá!";
         }
-        else {
-            plan.setAktualniProstor(sousedniProstor);
-            return sousedniProstor.dlouhyPopis();
+        if (sousedniProstor.jeZamcen()) {
+            return "Tudy se nedá projít, je zamčeno.";
         }
+        // do komnaty princezny lze vstoupit jen s mečem v batohu
+        if (sousedniProstor.getNazev().equals("komnata")
+                && plan.getBatoh().najdiVec("meč") == null) {
+            return "Bez meče se k princezně raději nepouštěj. Co kdyby ji někdo hlídal?";
+        }
+        plan.setAktualniProstor(sousedniProstor);
+        return sousedniProstor.dlouhyPopis();
     }
     
     /**

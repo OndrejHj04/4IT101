@@ -25,8 +25,10 @@ public class Prostor {
 
     private String nazev;
     private String popis;
-    private Set<Prostor> vychody;   // obsahuje sousední místnosti
-    private Map<String, Vec> veci;  // věci ležící v prostoru, klíč = název věci
+    private Set<Prostor> vychody;        // obsahuje sousední místnosti
+    private Map<String, Vec> veci;       // věci ležící v prostoru, klíč = název věci
+    private Map<String, Postava> postavy;// postavy v prostoru, klíč = název postavy
+    private boolean zamcen;              // true = do prostoru nelze vstoupit
 
     /**
      * Vytvoření prostoru se zadaným popisem, např. "kuchyň", "hala", "trávník
@@ -41,6 +43,8 @@ public class Prostor {
         this.popis = popis;
         vychody = new HashSet<>();
         veci = new LinkedHashMap<>();
+        postavy = new LinkedHashMap<>();
+        zamcen = false;
     }
 
     /**
@@ -123,7 +127,24 @@ public class Prostor {
     public String dlouhyPopis() {
         return "Jsi v mistnosti/prostoru " + popis + ".\n"
                 + popisVychodu() + "\n"
-                + popisVeci();
+                + popisVeci() + "\n"
+                + popisPostav();
+    }
+
+    /**
+     * Vrací textový řetězec, který popisuje postavy v prostoru.
+     *
+     * @return Popis postav v prostoru
+     */
+    private String popisPostav() {
+        String vracenyText = "postavy:";
+        if (postavy.isEmpty()) {
+            return vracenyText + " nikdo";
+        }
+        for (Postava p : postavy.values()) {
+            vracenyText += " " + p.getNazev();
+        }
+        return vracenyText;
     }
 
     /**
@@ -228,5 +249,51 @@ public class Prostor {
      */
     public Collection<Vec> getVeci() {
         return Collections.unmodifiableCollection(veci.values());
+    }
+
+    /**
+     * Vloží postavu do prostoru.
+     *
+     * @param postava postava, která se má v prostoru objevit
+     */
+    public void vlozPostavu(Postava postava) {
+        postavy.put(postava.getNazev(), postava);
+    }
+
+    /**
+     * Vrátí postavu z prostoru podle názvu (bez odebrání).
+     *
+     * @param nazev název hledané postavy
+     * @return nalezená postava, nebo null, pokud v prostoru není
+     */
+    public Postava najdiPostavu(String nazev) {
+        return postavy.get(nazev);
+    }
+
+    /**
+     * Vrací nemodifikovatelnou kolekci postav v prostoru.
+     *
+     * @return kolekce postav v prostoru
+     */
+    public Collection<Postava> getPostavy() {
+        return Collections.unmodifiableCollection(postavy.values());
+    }
+
+    /**
+     * Vrací true, pokud je prostor zamčený (nelze do něj vstoupit).
+     *
+     * @return true, pokud je prostor zamčený
+     */
+    public boolean jeZamcen() {
+        return zamcen;
+    }
+
+    /**
+     * Nastaví, zda je prostor zamčený.
+     *
+     * @param zamcen true = zamčeno, false = odemčeno
+     */
+    public void setZamcen(boolean zamcen) {
+        this.zamcen = zamcen;
     }
 }

@@ -11,16 +11,19 @@ public class Vec {
 
     private String nazev;
     private boolean prenositelna;
+    private String popis;
 
     /**
      *  Konstruktor.
      *
      *  @param nazev        jednoznačný název věci bez mezer
      *  @param prenositelna true, pokud lze věc sebrat do batohu
+     *  @param popis        popis, který se vypíše při příkazu prozkoumej
      */
-    public Vec(String nazev, boolean prenositelna) {
+    public Vec(String nazev, boolean prenositelna, String popis) {
         this.nazev = nazev;
         this.prenositelna = prenositelna;
+        this.popis = popis;
     }
 
     /**
@@ -39,5 +42,14 @@ public class Vec {
      */
     public boolean jePrenositelna() {
         return prenositelna;
+    }
+
+    /**
+     *  Vrací popis věci (pro příkaz prozkoumej).
+     *
+     *  @return popis věci
+     */
+    public String getPopis() {
+        return popis;
     }
 }
