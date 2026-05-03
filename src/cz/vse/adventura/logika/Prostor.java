@@ -2,6 +2,8 @@ package cz.vse.adventura.logika;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +26,7 @@ public class Prostor {
     private String nazev;
     private String popis;
     private Set<Prostor> vychody;   // obsahuje sousední místnosti
+    private Map<String, Vec> veci;  // věci ležící v prostoru, klíč = název věci
 
     /**
      * Vytvoření prostoru se zadaným popisem, např. "kuchyň", "hala", "trávník
@@ -37,6 +40,7 @@ public class Prostor {
         this.nazev = nazev;
         this.popis = popis;
         vychody = new HashSet<>();
+        veci = new LinkedHashMap<>();
     }
 
     /**
@@ -118,7 +122,25 @@ public class Prostor {
      */
     public String dlouhyPopis() {
         return "Jsi v mistnosti/prostoru " + popis + ".\n"
-                + popisVychodu();
+                + popisVychodu() + "\n"
+                + popisVeci();
+    }
+
+    /**
+     * Vrací textový řetězec, který popisuje věci v prostoru, například:
+     * "věci: jablko meč" nebo "věci: nic".
+     *
+     * @return Popis věcí v prostoru
+     */
+    private String popisVeci() {
+        String vracenyText = "věci:";
+        if (veci.isEmpty()) {
+            return vracenyText + " nic";
+        }
+        for (Vec v : veci.values()) {
+            vracenyText += " " + v.getNazev();
+        }
+        return vracenyText;
     }
 
     /**
@@ -168,5 +190,43 @@ public class Prostor {
      */
     public Collection<Prostor> getVychody() {
         return Collections.unmodifiableCollection(vychody);
+    }
+
+    /**
+     * Vloží věc do prostoru.
+     *
+     * @param vec věc, která se má v prostoru objevit
+     */
+    public void vlozVec(Vec vec) {
+        veci.put(vec.getNazev(), vec);
+    }
+
+    /**
+     * Vrátí věc z prostoru podle názvu (bez odebrání).
+     *
+     * @param nazev název hledané věci
+     * @return nalezená věc, nebo null, pokud věc v prostoru není
+     */
+    public Vec najdiVec(String nazev) {
+        return veci.get(nazev);
+    }
+
+    /**
+     * Vyjme věc z prostoru podle názvu.
+     *
+     * @param nazev název věci
+     * @return vyjmutá věc, nebo null, pokud věc v prostoru nebyla
+     */
+    public Vec vyberVec(String nazev) {
+        return veci.remove(nazev);
+    }
+
+    /**
+     * Vrací nemodifikovatelnou kolekci věcí, které leží v prostoru.
+     *
+     * @return kolekce věcí v prostoru
+     */
+    public Collection<Vec> getVeci() {
+        return Collections.unmodifiableCollection(veci.values());
     }
 }

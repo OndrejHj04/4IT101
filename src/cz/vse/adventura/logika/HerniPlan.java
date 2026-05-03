@@ -13,40 +13,48 @@ package cz.vse.adventura.logika;
  *@version    pro školní rok 2016/2017
  */
 public class HerniPlan {
-    
+
     private Prostor aktualniProstor;
-    
+    private Batoh batoh;
+
      /**
-     *  Konstruktor který vytváří jednotlivé prostory a propojuje je pomocí východů.
-     *  Jako výchozí aktuální prostor nastaví halu.
+     *  Konstruktor, který vytváří jednotlivé prostory, rozmisťuje věci
+     *  a inicializuje batoh hráče.
      */
     public HerniPlan() {
+        batoh = new Batoh();
         zalozProstoryHry();
-
     }
     /**
-     *  Vytváří jednotlivé prostory a propojuje je pomocí východů.
-     *  Jako výchozí aktuální prostor nastaví domeček.
+     *  Vytváří jednotlivé prostory, propojuje je pomocí východů
+     *  a rozmisťuje do nich věci.
+     *  Jako výchozí aktuální prostor nastaví světnici.
      */
     private void zalozProstoryHry() {
         // vytvářejí se jednotlivé prostory
-        Prostor domecek = new Prostor("domeček","domeček, ve kterém bydlí Karkulka");
-        Prostor chaloupka = new Prostor("chaloupka", "chaloupka, ve které bydlí babička Karkulky");
-        Prostor jeskyne = new Prostor("jeskyně","stará plesnivá jeskyně");
-        Prostor les = new Prostor("les","les s jahodami, malinami a pramenem vody");
-        Prostor hlubokyLes = new Prostor("hluboký_les","temný les, ve kterém lze potkat vlka");
-        
+        Prostor svetnice = new Prostor("světnice", "světnice Honzova rodného domu");
+        Prostor les      = new Prostor("les",      "hustý les plný stromů a křovin");
+        Prostor jeskyne  = new Prostor("jeskyně",  "temná jeskyně, kde spí drak");
+        Prostor hrad     = new Prostor("hrad",     "vstupní hala starého hradu");
+        Prostor komnata  = new Prostor("komnata",  "komnata, ve které čeká začarovaná princezna Elenka");
+
         // přiřazují se průchody mezi prostory (sousedící prostory)
-        domecek.setVychod(les);
-        les.setVychod(domecek);
-        les.setVychod(hlubokyLes);
-        hlubokyLes.setVychod(les);
-        hlubokyLes.setVychod(jeskyne);
-        hlubokyLes.setVychod(chaloupka);
-        jeskyne.setVychod(hlubokyLes);
-        chaloupka.setVychod(hlubokyLes);
-                
-        aktualniProstor = domecek;  // hra začíná v domečku       
+        svetnice.setVychod(les);
+        les.setVychod(svetnice);
+        les.setVychod(jeskyne);
+        les.setVychod(hrad);
+        jeskyne.setVychod(les);
+        hrad.setVychod(les);
+        hrad.setVychod(komnata);
+        komnata.setVychod(hrad);
+
+        // rozmístění věcí
+        svetnice.vlozVec(new Vec("jablko", true));
+        les.vlozVec(new Vec("meč",        true));
+        jeskyne.vlozVec(new Vec("klíč",   true));
+        hrad.vlozVec(new Vec("truhla",    false));
+
+        aktualniProstor = svetnice;  // hra začíná ve světnici
     }
     
     /**
@@ -66,6 +74,15 @@ public class HerniPlan {
      */
     public void setAktualniProstor(Prostor prostor) {
        aktualniProstor = prostor;
+    }
+
+    /**
+     *  Vrací odkaz na batoh hráče.
+     *
+     *  @return batoh hráče
+     */
+    public Batoh getBatoh() {
+        return batoh;
     }
 
 }

@@ -26,6 +26,9 @@ public class Hra implements IHra {
         platnePrikazy.vlozPrikaz(new PrikazNapoveda(platnePrikazy));
         platnePrikazy.vlozPrikaz(new PrikazJdi(herniPlan));
         platnePrikazy.vlozPrikaz(new PrikazKonec(this));
+        platnePrikazy.vlozPrikaz(new PrikazSeber(herniPlan));
+        platnePrikazy.vlozPrikaz(new PrikazPoloz(herniPlan));
+        platnePrikazy.vlozPrikaz(new PrikazVypis(herniPlan));
     }
 
     /**
@@ -33,7 +36,8 @@ public class Hra implements IHra {
      */
     public String vratUvitani() {
         return "Vítejte!\n" +
-               "Toto je příběh o Červené Karkulce, babičce a vlkovi.\n" +
+               "Toto je příběh o Honzovi, který se vydává zachránit princeznu Elenku,\n" +
+               "kterou zlý drak zaklel a uvěznil v hradní komnatě.\n" +
                "Napište 'nápověda', pokud si nevíte rady, jak hrát dál.\n" +
                "\n" +
                herniPlan.getAktualniProstor().dlouhyPopis();
