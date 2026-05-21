@@ -46,7 +46,7 @@ class PrikazProzkoumej implements IPrikaz {
         if (vec != null) {
             return vec.getPopis();
         }
-        return "Nic takového tu není ani v batohu.";
+        return "Taková věc není ani v prostoru ani v batohu";
     }
 
     /**

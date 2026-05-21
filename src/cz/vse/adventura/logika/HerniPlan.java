@@ -63,7 +63,7 @@ public class HerniPlan {
                 "Obrovský šupinatý drak, bylo by lepší ho neprobudit.",
                 "Drak ve spánku zafuněl. Raději jdi pryč."));
         komnata.vlozPostavu(new Postava("Elenka",
-                "Zakletá princezna Elenka už dlohé roky čeká na svého zachránce.",
+                "Zakletá princezna Elenka už dlouhé roky čeká na svého zachránce.",
                 "Princezna Elenka se rozzáří: \"Honzo, tys mě zachránil!\""));
 
         // komnata je na začátku zamčená
